@@ -1,0 +1,30 @@
+{
+  "id": "2900159",
+  "name": "社区",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "77697",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "201642",
+      "name": "3.1 评论",
+      "font_class": "31pinglun",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "2154212",
+      "name": "直播观看数_32",
+      "font_class": "zhiboguankanshu",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    }
+  ]
+}
