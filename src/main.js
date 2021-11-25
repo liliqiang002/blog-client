@@ -4,5 +4,20 @@ import router from './router'
 import store from './store'
 import './normalize.css'
 import './assets/iconfont/iconfont.css'
+import VueMarkdownEditor from '@kangc/v-md-editor'
+import '@kangc/v-md-editor/lib/style/base-editor.css'
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js'
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css'
+// http请求
+import httpRequest from './utils/request'
+import Prism from 'prismjs'
 
-createApp(App).use(store).use(router).mount('#app')
+// element-ui
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+VueMarkdownEditor.use(vuepressTheme, {
+  Prism
+})
+const app = createApp(App)
+app.config.globalProperties.$http = httpRequest
+app.use(store).use(router).use(VueMarkdownEditor).use(ElementPlus).mount('#app')

@@ -1,10 +1,38 @@
 <template>
   <router-view/>
+  <Login v-if="isShowLoginForm" />
 </template>
-
+<script>
+import Login from './components/login'
+import { mapState } from 'vuex'
+export default {
+  components: {
+    Login
+  },
+  computed: {
+    ...mapState([
+      'isLogin',
+      'isShowLoginForm'
+    ])
+  },
+  data () {
+    return {}
+  }
+}
+</script>
 <style lang="scss">
 html {
   background-color: #f4f5f5;
+}
+* {
+  box-sizing: border-box;
+}
+blockquote {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -29,5 +57,19 @@ a {
   -webkit-line-clamp: 1;
   line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+.rich-text {
+  line-height: 1.8;
+  text-align: justify;
+  img {
+    max-width: 100%;
+  }
+  pre {
+    background: #f8f8f8;
+    padding: 15px;
+  }
+  a {
+    color: #0269c8;
+  }
 }
 </style>
