@@ -88,6 +88,7 @@ export default {
       cursor: pointer;
       border: 0 none;
       margin-left: 20px;
+      line-height: 32px;
     }
   }
 }

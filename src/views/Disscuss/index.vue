@@ -3,13 +3,13 @@
     <Header />
     <div class="page-content-wrap">
       <div class="home-main">
-        <div class="list-header">
+        <!-- <div class="list-header">
           <div class="list-nav">
             <div class="list-nav-item active">热门</div>
             <div class="list-nav-item">最新</div>
             <div class="list-nav-item">热榜</div>
           </div>
-        </div>
+        </div> -->
         <div class="list-wrap">
           <div class="list">
             <div @click="jumpDetail(item)" v-for="item in list" :key="item.id" class="list-item">
