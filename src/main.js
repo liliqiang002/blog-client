@@ -15,9 +15,12 @@ import Prism from 'prismjs'
 // element-ui
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import SvgIcon from '@/components/svgIcon'
+
 VueMarkdownEditor.use(vuepressTheme, {
   Prism
 })
 const app = createApp(App)
+app.component('svg-icon', SvgIcon)
 app.config.globalProperties.$http = httpRequest
 app.use(store).use(router).use(VueMarkdownEditor).use(ElementPlus).mount('#app')
