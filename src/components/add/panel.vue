@@ -13,7 +13,7 @@
     <div class="form-item">
       <div class="label">添加标签：</div>
       <div class="form-item-content tag-select">
-        <el-select style="width: 367px; border-radius: 2px;" v-model="params.tag_id" placeholder="Select">
+        <el-select style="width: 367px; border-radius: 2px;" v-model="params.tag_id" placeholder="请选择标签">
           <el-option
             v-for="item in tagsList"
             :key="item.id"

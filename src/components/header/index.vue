@@ -12,7 +12,7 @@
         <router-link class="nav-item" to="/study/index">学习</router-link>
         <router-link class="nav-item" to="/resources/index">资源</router-link>
         <router-link class="nav-item" to="/trends/index">动态</router-link>
-        <router-link class="nav-item" to="/daily/index">日志</router-link>
+        <router-link class="nav-item" to="/daily/index">记录</router-link>
       </div>
       <button @click="toAdd" class="add-btn">写文章</button>
     </div>

@@ -9,9 +9,9 @@
           <button @click="addHandle" class="add-btn">发布</button>
           <Panel @getPanelData="getPanelData" @hidePanel="hidePanel" :isShowPanel="isShowPanel" class="add-panel" />
         </div>
-        <div class="avatar">
+        <!-- <div class="avatar">
           <img src="@/assets/images/logo.png" alt="">
-        </div>
+        </div> -->
       </div>
     </div>
     <div class="editor-box">
@@ -53,7 +53,7 @@ export default {
       params.title = this.title
       params.content = this.content
       console.log({ ...params, user_id: 1 })
-      const res = await this.$http.post('/article/add', { ...params, user_id: 1 })
+      const res = await this.$http.post('/article/add', { ...params })
       console.log(res)
       this.hidePanel()
       this.$router.push({ path: '/' })
@@ -94,7 +94,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30px;
+    padding: 0 20px;
     background-color: #f4f5f5;
     .left-box {
       flex: 1;
@@ -142,7 +142,7 @@ export default {
         color: #ffffff;
         cursor: pointer;
         border: 0 none;
-        margin-right: 20px;
+        // margin-right: 20px;
       }
       .avatar {
         width: 40px;
