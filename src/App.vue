@@ -42,7 +42,7 @@ blockquote {
   font-size: 14px;
 }
 .page-content-wrap {
-  max-width: 1200px;
+  width: 1200px;
   margin: auto;
 }
 a {
