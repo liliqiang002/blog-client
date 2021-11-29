@@ -11,9 +11,15 @@
       </div>
       <div class="list-container">
         <el-timeline>
-          <el-timeline-item v-for="(item, index) in listData" :key="index" :timestamp="timeFormat(item.created_at)" placement="top">
+          <el-timeline-item class="list-item" v-for="(item, index) in listData" :key="index" :timestamp="timeFormat(item.created_at)" placement="top">
             <el-card shadow="hover">
-              <h4>{{item.title}}</h4>
+              <div class="item-header">
+                <h4>{{item.title}}</h4>
+                <div class="actions">
+                  <span @click="editHandle(item)" class="icon iconfont icon-bianji"></span>
+                  <span @click="handleDelete(item.id)" class="icon iconfont icon-shanchu"></span>
+                </div>
+              </div>
               <div>
                 <pre>
                   {{item.content}}
@@ -26,7 +32,7 @@
     </div>
     <el-drawer
       v-model="drawer"
-      title="新增记录"
+      :title="editId ? '修改记录' : '新增记录'"
       direction="rtl"
       size="600px"
       :before-close="beforeDrawerClose"
@@ -65,29 +71,50 @@ export default {
       drawer: false,
       form: {
         title: '',
-        type: '',
+        type: '1',
         content: ''
       },
       rules: {
         title: [
-          { required: true, message: '标题不能为空', trigger: 'change' }
+          { required: true, message: '标题不能为空', trigger: 'blur' }
         ],
         type: [
           { required: true, message: '请选择类型', trigger: 'change' }
         ],
         content: [
-          { required: true, message: '内容不能为空', trigger: 'change' }
+          { required: true, message: '内容不能为空', trigger: 'blur' }
         ]
       },
       page: 1,
       per_page: 10,
-      listData: []
+      listData: [],
+      keywords: '',
+      editId: null
     }
   },
   created () {
     this.getList()
   },
   methods: {
+    editHandle (item) {
+      console.log(item.id)
+      this.editId = item.id
+      this.form.title = item.title
+      this.form.type = item.type
+      this.form.content = item.content
+      this.drawer = true
+    },
+    async handleDelete (id) {
+      this.$confirm('确定删除该条记录？', {
+        confirmButtonText: '删除',
+        cancelButtonText: '取消'
+      }).then(async () => {
+        await this.$http.delete(`/daily/delete/${id}`, {})
+        this.listData = this.listData.filter(item => { return item.id !== id })
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
     handleSearch () {
       this.page = 1
       this.getList()
@@ -102,6 +129,7 @@ export default {
       return moment(val).format('YYYY-MM-DD h:mm:ss')
     },
     showDrawer () {
+      this.editId = null
       this.drawer = true
     },
     drawerClose () {
@@ -125,12 +153,26 @@ export default {
     handleSave () {
       this.$refs.form.validate(async (valid) => {
         if (valid) {
-          const res = await this.$http.post('/daily/add', { ...this.form })
-          console.log(res)
-          this.page = 1
-          this.getList()
-          this.$refs.form.resetFields()
-          this.drawer = false
+          if (this.editId) {
+            const res = await this.$http.post('/daily/edit', { ...this.form, id: this.editId })
+            this.listData.forEach(item => {
+              if (item.id === res.data.id) {
+                const { title, content, type } = res.data
+                item.title = title
+                item.type = type
+                item.content = content
+              }
+            })
+            this.editId = null
+            this.$refs.form.resetFields()
+            this.drawer = false
+          } else {
+            await this.$http.post('/daily/add', { ...this.form })
+            this.page = 1
+            this.getList()
+            this.$refs.form.resetFields()
+            this.drawer = false
+          }
         } else {
           console.log('error submit!!')
           return false
@@ -210,6 +252,25 @@ export default {
   overflow-y: auto;
   &::-webkit-scrollbar {
     display: none;
+  }
+  .list-item:hover {
+    .item-header {
+      .actions {
+        display: block;
+      }
+    }
+  }
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    .actions {
+      display: none;
+      .iconfont {
+        font-size: 18px;
+        margin-left: 10px;
+        cursor: pointer;
+      }
+    }
   }
   pre {
     white-space: pre-wrap;
